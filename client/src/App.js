@@ -1,13 +1,21 @@
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Home from './pages/Home';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import PageNotFound from './components/Error/PageNotFound';
+import SingleProduct from './components/product/SingleProduct';
 
 function App() {
   return (
-    <div className="App">
-      <h1>AWS Application</h1>
-      <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-    </div>
+    <BrowserRouter>
+    <Header/>
+      <Routes>
+        <Route path='/' element={<Home/>} />
+        <Route path='/single-product/:id' element={<SingleProduct/>} />
+        <Route path='*' element={<PageNotFound/>} />
+      </Routes>
+      <Footer/>
+    </BrowserRouter>
   );
 }
 
