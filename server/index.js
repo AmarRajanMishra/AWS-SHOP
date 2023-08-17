@@ -1,6 +1,7 @@
 import { config } from 'dotenv'
 import express from 'express';
 import productRouter from './router/productRouter.js'
+import authRouter from './router/authRouter.js'
 import connectDB from './config/configdb.js';
 import cors from 'cors'
 
@@ -18,6 +19,7 @@ const server  = express();
 server.use(cors())
 server.use(express.json())
 server.use('/api/v1/products', productRouter)
+server.use('/api/v1/users', authRouter)
 
 
 
