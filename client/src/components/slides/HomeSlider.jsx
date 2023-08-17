@@ -10,6 +10,10 @@ function HomeSlider() {
   return (
     <AliceCarousel
         items={items}
+        disableButtonsControls
+        autoPlay
+        autoPlayInterval={1000}
+        infinite
     />
   )
 }
