@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import PageNotFound from './components/Error/PageNotFound';
 import SingleProduct from './components/product/SingleProduct';
 import CreateProduct from './components/product/CreateProduct';
+import CartPage from './pages/CartPage';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
     <Header/>
       <Routes>
         <Route path='/' element={<Home/>} />
+        <Route path='/cart' element={<CartPage/>} />
         <Route path='/single-product/:id' element={<SingleProduct/>} />
         <Route path='/update-product/:id' element={<SingleProduct/>} />
         <Route path='/create-product' element={<CreateProduct/>} />

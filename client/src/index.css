@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.mainCart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cartSection{
+    width: 50%;
+    height: auto;
+}
