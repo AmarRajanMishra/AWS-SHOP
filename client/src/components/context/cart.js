@@ -7,7 +7,7 @@ const CartProvider = ({ children }) => {
   useEffect(() => {
     let existingCartItem = localStorage.getItem("cart");
     if (existingCartItem) setCart(JSON.parse(existingCartItem));
-  }, [cart, setCart]);
+  }, [setCart]);
 
   return (
     <CartContext.Provider value={[cart, setCart]}>
