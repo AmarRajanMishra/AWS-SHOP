@@ -74,7 +74,7 @@ export const loginUser = async (req, res) =>{
             return res.json({message : 'Email or password mismatch'})
         }
         const token = jwt.sign(
-            {email : email, id : user._id}, 
+            {email : email, id : existingUser._id}, 
             process.env.SECRET_KEY
             )
         res.status(201).json({

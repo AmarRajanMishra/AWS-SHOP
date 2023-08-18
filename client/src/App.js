@@ -6,6 +6,8 @@ import PageNotFound from './components/Error/PageNotFound';
 import SingleProduct from './components/product/SingleProduct';
 import CreateProduct from './components/product/CreateProduct';
 import CartPage from './pages/CartPage';
+import RegistrationPage from './pages/auth/Registration';
+import LoginPage from './pages/auth/Login';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/cart' element={<CartPage/>} />
+        <Route path='/registration' element={<RegistrationPage/>} />
+        <Route path='/login' element={<LoginPage/>} />
         <Route path='/single-product/:id' element={<SingleProduct/>} />
         <Route path='/update-product/:id' element={<SingleProduct/>} />
         <Route path='/create-product' element={<CreateProduct/>} />
