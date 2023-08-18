@@ -1,136 +1,182 @@
-import React, { useState } from "react";
-import "./authStyle.css";
-import axios from "axios";
+import React, { useState } from 'react';
+import axios from 'axios';
 
-function RegisterPage() {
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+
+const RegistrationPage = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    number: "",
-    password: "",
-    image: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    number: '',
+    password: '',
+    image: '',
   });
 
-  const handleInputData = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // request to Server
+    // Handle form submission here (e.g., send data to server)
     try {
-      const res = await axios.post(
-        "http://localhost:8080/api/v1/users/register",
-        formData
-      );
-      console.log(res);
+      const response = await axios.post('http://localhost:8080/api/v1/users/register', formData);
+      console.log('Response:', response.data);
+      toast.success(response.data && response.data.message);
     } catch (error) {
-      console.log(error);
+      console.error('Error:', error);
+      toast.error('Error in Registration');
     }
-    console.log(formData);
   };
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div className="container">
-          <h1>Register</h1>
-          <p>Please fill in this form to create an account.</p>
-          <hr />
-          <label htmlFor="firstName">
-            <b>First Name</b>
-          </label>
-          <input
-            value={formData.firstName}
-            onChange={handleInputData}
-            type="text"
-            placeholder="Enter First Name"
-            name="firstName"
-            id="firstName"
-            required
-          />
-          <label htmlFor="lastName">
-            <b>Last Name</b>
-          </label>
-          <input
-            value={formData.lastName}
-            onChange={handleInputData}
-            type="text"
-            placeholder="Enter Last Name"
-            name="lastName"
-            id="lastName"
-            required
-          />
-          <label htmlFor="email">
-            <b>Email</b>
-          </label>
-          <input
-            value={formData.email}
-            onChange={handleInputData}
-            type="text"
-            placeholder="Enter Email"
-            name="email"
-            id="email"
-            required
-          />
-          <label htmlFor="number">
-            <b>Mobile No. </b>
-          </label>
-          <input
-            value={formData.number}
-            onChange={handleInputData}
-            type="text"
-            placeholder="Enter Number"
-            name="number"
-            id="number"
-            required
-          />
-          <label htmlFor="password">
-            <b>Password</b>
-          </label>
-          <input
-            value={formData.password}
-            onChange={handleInputData}
-            type="password"
-            placeholder="Enter Password"
-            name="password"
-            id="password"
-            required
-          />
-          <label htmlFor="image">
-            <b>Image URL</b>
-          </label>
-          <input
-            value={formData.image}
-            onChange={handleInputData}
-            type="text"
-            placeholder="Enter Image URL"
-            name="image"
-            id="image"
-            required
-          />
 
-          <hr />
-          <p>
-            By creating an account you agree to our{" "}
-            <a href="#">Terms &amp; Privacy</a>.
-          </p>
-          <button type="submit" className="registerbtn">
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
+        <h2 className="text-2xl font-semibold mb-4">Register</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4 relative">
+            <label
+              htmlFor="firstName"
+              className={`block text-sm font-medium mb-1 ${
+                formData.username ? 'label-up' : ''
+              }`}
+            >
+              FirstName
+            </label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleInputChange}
+              className="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:border-blue-400"
+              required
+            />
+          </div>
+          <div className="mb-4 relative">
+            <label
+              htmlFor="lastName"
+              className={`block text-sm font-medium mb-1 ${
+                formData.username ? 'label-up' : ''
+              }`}
+            >
+              LastName
+            </label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleInputChange}
+              className="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:border-blue-400"
+              required
+            />
+          </div>
+          {/* Repeat the same structure for email and password fields */}
+          <div className="mb-4 relative">
+            <label
+              htmlFor="email"
+              className={`block text-sm font-medium mb-1 ${
+                formData.email ? 'label-up' : ''
+              }`}
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              className="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:border-blue-400"
+              required
+            />
+          </div>
+          <div className="mb-4 relative">
+            <label
+              htmlFor="email"
+              className={`block text-sm font-medium mb-1 ${
+                formData.email ? 'label-up' : ''
+              }`}
+            >
+              number
+            </label>
+            <input
+              type="number"
+              id="number"
+              name="number"
+              value={formData.number}
+              onChange={handleInputChange}
+              className="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:border-blue-400"
+              required
+            />
+          </div>
+          <div className="mb-4 relative">
+            <label
+              htmlFor="password"
+              className={`block text-sm font-medium mb-1 ${
+                formData.password ? 'label-up' : ''
+              }`}
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              className="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:border-blue-400"
+              required
+            />
+          </div>
+          <div className="mb-4 relative">
+            <label
+              htmlFor="image"
+              className={`block text-sm font-medium mb-1 ${
+                formData.username ? 'label-up' : ''
+              }`}
+            >
+              Image URL
+            </label>
+            <input
+              type="text"
+              id="image"
+              name="image"
+              value={formData.image}
+              onChange={handleInputChange}
+              className="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:border-blue-400"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
+          >
             Register
           </button>
+        </form>
+        <div className="mt-4 text-sm text-gray-600">
+          Already have an account?{' '}
+          <a
+            href="#"
+            className="text-blue-500 hover:text-blue-600"
+          >
+            Click here to log in
+          </a>
         </div>
-        <div className="container signin">
-          <p>
-            Already have an account? <a href="#">Sign in</a>.
-          </p>
-        </div>
-      </form>
+      </div>
+      <ToastContainer/>
     </div>
   );
-}
+};
 
-export default RegisterPage;
+export default RegistrationPage;

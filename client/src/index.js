@@ -12,8 +12,8 @@ root.render(
   <React.StrictMode>
     <AuthProvider>
       <CartProvider>
-     <App /> 
-    </CartProvider>
+        <App />
+      </CartProvider>
     </AuthProvider>
     
     
