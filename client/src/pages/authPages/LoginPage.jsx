@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useAuth } from '../../components/context/auth'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -33,7 +33,7 @@ const LoginPage = () => {
           token: response.data.token,
         });
         localStorage.setItem("auth", JSON.stringify(response.data));
-        // navigate("/");
+        navigate("/");
       } else {
         toast.error(response.data.message);
       }
@@ -84,12 +84,12 @@ const LoginPage = () => {
           </button>
         </form>
         <div className="mt-4 text-sm text-gray-600">
-          <a
-            href="#"
+          <Link
+            to="/register"
             className="text-blue-500 hover:text-blue-600"
           >
-            Forgot password?
-          </a>
+            Click here to Register
+          </Link>
         </div>
       </div>
       <ToastContainer/>

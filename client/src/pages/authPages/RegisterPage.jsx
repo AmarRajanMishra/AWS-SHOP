@@ -3,10 +3,12 @@ import axios from 'axios';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
 const RegistrationPage = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -31,6 +33,7 @@ const RegistrationPage = () => {
       const response = await axios.post('http://localhost:8080/api/v1/users/register', formData);
       console.log('Response:', response.data);
       toast.success(response.data && response.data.message);
+      navigate('/login')
     } catch (error) {
       console.error('Error:', error);
       toast.error('Error in Registration');
@@ -166,12 +169,12 @@ const RegistrationPage = () => {
         </form>
         <div className="mt-4 text-sm text-gray-600">
           Already have an account?{' '}
-          <a
-            href="#"
+          <Link
+            to="/login"
             className="text-blue-500 hover:text-blue-600"
           >
             Click here to log in
-          </a>
+          </Link>
         </div>
       </div>
       <ToastContainer/>

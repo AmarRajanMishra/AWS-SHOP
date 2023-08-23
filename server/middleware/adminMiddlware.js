@@ -1,26 +1,5 @@
-import jwt from 'jsonwebtoken'
 import User from '../model/userSchema.js'
 
-export const auth = async (req, res, next) => {
-    try {
-        const token = req.headers.authorization;
-        if(token){
-            let user = jwt.verify(token, process.env.SECRET_KEY)
-            req.user = { _id: user.id };
-        }else{
-            res.status(401).json({
-                message : 'Unauthorized User'
-            })
-        }
-        next();
-    } catch (error) {
-        console.log(error)
-        res.status(401).json({
-            success : false,
-            message : 'Unauthorized User'
-        })
-    }
-};
 
 
 //To check user is admin or not

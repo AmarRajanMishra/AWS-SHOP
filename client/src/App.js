@@ -12,6 +12,11 @@ import RegisterPage from './pages/authPages/RegisterPage';
 import ContactUs from './pages/ContactUs';
 import AboutUs from './pages/AboutUs';
 import AllProducts from './pages/AllProducts';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminRoute from './components/Routes/AdminRoute';
+import PrivateRoute from './components/Routes/Private';
+import UserDashboard from './pages/user/UserDashboard';
+import Test from './components/Test';
 
 
 function App() {
@@ -20,6 +25,15 @@ function App() {
     <Header/>
       <Routes>
         <Route path='/' element={<Home/>} />
+        <Route path='/test' element={<Test/>}/>
+        <Route path='/dashboard' element={<AdminRoute/>}>
+          <Route path='admin' element={<AdminDashboard/>}/>
+          <Route path='admin/create-product' element={<CreateProduct/>} />
+          <Route path='admin/update-product/:id' element={<SingleProduct/>} />
+        </Route>
+        <Route path='/dashboard' element={<PrivateRoute/>}>
+          <Route path='user' element={<UserDashboard/>}/>
+        </Route>
         <Route path='/product' element={<AllProducts/>} />
         <Route path='/cart' element={<CartPage/>} />
         <Route path='/login' element={<LoginPage/>} />
@@ -27,8 +41,6 @@ function App() {
         <Route path='/contact' element={<ContactUs/>} />
         <Route path='/about' element={<AboutUs/>} />
         <Route path='/single-product/:id' element={<SingleProduct/>} />
-        <Route path='/update-product/:id' element={<SingleProduct/>} />
-        <Route path='/create-product' element={<CreateProduct/>} />
         <Route path='*' element={<PageNotFound/>} />
       </Routes>
       <Footer/>

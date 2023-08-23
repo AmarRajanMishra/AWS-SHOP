@@ -5,6 +5,8 @@ import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@her
 import { navigation } from './navigationData'
 import { NavLink } from 'react-router-dom'
 import { useCart } from '../context/cart'
+import { useAuth} from '../context/auth'
+import { ToastContainer, toast } from 'react-toastify'
 
 
 
@@ -13,9 +15,21 @@ function classNames(...classes) {
 }
 
 export default function Header() {
+  const [auth, setAuth] = useAuth()
   const [cart] = useCart()
   const [open, setOpen] = useState(false)
+  // console.log('User Data', auth)
 
+  // Logout Function
+  const handleLogout = () => {
+    setAuth({
+      ...auth,
+      user : null,
+      token : ""
+    });
+    localStorage.removeItem("auth")
+    toast.success('Logout Successfully')
+  }
   return (
     <div className="bg-dark sticky top-0 z-50">
       {/* Mobile menu */}
@@ -130,7 +144,9 @@ export default function Header() {
                 </div>
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-                  <div className="flow-root">
+                  {!auth?.user ? (
+                    <>
+                      <div className="flow-root">
                     <NavLink to="/login" className="-m-2 block p-2 font-medium text-gray-900">
                       Sign in
                     </NavLink>
@@ -140,6 +156,25 @@ export default function Header() {
                       Create account
                     </NavLink>
                   </div>
+                    </>
+                  ):(
+                    <>
+                      <div className="flow-root">
+                    <NavLink to={`/dashboard/${
+                            auth?.user?.role === 1 ? "admin" : "user"
+                          }`} className="-m-2 block p-2 font-medium text-gray-900">
+                      {auth?.user?.firstName+" "+auth?.user?.lastName}
+                    </NavLink>
+                  </div>
+                  <div className="flow-root">
+                    <NavLink to="/login"
+                    onClick={handleLogout}
+                    className="-m-2 block p-2 font-medium text-gray-900">
+                      Logout
+                    </NavLink>
+                  </div>
+                    </>
+                  )}
                 </div>
 
               </Dialog.Panel>
@@ -280,13 +315,32 @@ export default function Header() {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <NavLink to="/login" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                  {!auth?.user ? (
+                    <>
+                    <NavLink to="/login" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                     Sign in
                   </NavLink>
                   <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                   <NavLink to="/register" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                     Create account
                   </NavLink>
+                    </>
+                  ):(
+                    <>
+                    <NavLink to={`/dashboard/${
+                            auth?.user?.role === 1 ? "admin" : "user"
+                          }`} className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                    {auth?.user?.firstName+" "+auth?.user?.lastName}
+                  </NavLink>
+                  <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+                  <NavLink to="/login"
+                  onClick={handleLogout}
+                   className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                    Logout
+                  </NavLink>
+                    </>
+                  )}
+                  
                 </div>
 
                 
@@ -315,6 +369,7 @@ export default function Header() {
           </div>
         </nav>
       </header>
+      <ToastContainer/>
     </div>
   )
 }
