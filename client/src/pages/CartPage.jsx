@@ -77,14 +77,21 @@ function CartPage() {
   // Handle Payment
   const handlePayment = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const { nonce } = await instance.requestPaymentMethod();
-      const { data } = await axios.post('http://localhost:8080/api/v1/payment/braintree-payment', {
-        nonce, 
-        cart
-      })
-      console.log("Payment Details Data", data)
-      setLoading(false)
+      const { data } = await axios.post(
+        'http://localhost:8080/api/v1/payment//braintree-payment',
+        {
+          nonce,
+          cart,
+        }
+      );
+      console.log("Payment Details Data : ",data, nonce)
+      setLoading(false);
+      localStorage.removeItem('cart');
+      setCart([]);
+      navigate('/dashboard/user/orders');
+      alert('Payment Completed Successfully');
     } catch (error) {
       console.log(error)
       setLoading(false)
