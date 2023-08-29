@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useCart } from "../components/context/cart";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from '../components/context/auth'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
 
 function CartPage() {
     const navigate = useNavigate()
-  const [cart, setCart] = useCart();
+    const [cart, setCart] = useCart();
+    const [auth, setAuth] = useAuth();
+    const [clientToken, setClientToken] = useState('')
+    const [instance, setInstance] = useState(null)
+    const [loading, setLoading] = useState(false)
+    const [isPopupOpen, setIsPopupOpen] = useState(false)
+
+    const openPopup = () => {
+      setIsPopupOpen(true)
+    }
+    const closePopup = () => {
+      setIsPopupOpen(false)
+    }
+
     
 //   Get Total Price
   const totalPrice = () => {
@@ -38,6 +53,42 @@ function CartPage() {
       toast.success('Error in Item removing')
     }
   };
+
+
+
+
+  // Payment Integration
+  // 1. Get Token
+  const getToken = async () => {
+      try {
+        const { data } = await axios.get('http://localhost:8080/api/v1/payment/braintree-token')
+        console.log("Payment Token" , data)
+        setClientToken(data?.clientToken)
+      } catch (error) {
+        console.log(error)
+      }
+  }
+
+  useEffect(()=>{
+    getToken();
+  },[auth?.token])
+
+  // Handle Payment
+  const handlePayment = async () => {
+    try {
+      setLoading(true)
+      const { nonce } = await instance.requestPaymentMethod();
+      const { data } = await axios.post('http://localhost:8080/api/v1/payment/braintree-payment', {
+        nonce, 
+        cart
+      })
+      console.log("Payment Details Data", data)
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+    }
+  }
 
   return (
     <div className="mainCart">
@@ -134,13 +185,14 @@ function CartPage() {
                       Shipping and taxes calculated at checkout.
                     </p>
                     <div className="mt-6">
-                      <a
-                        href="#"
+                      <Link
+                        onClick={openPopup}
                         className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                       >
                         Checkout
-                      </a>
+                      </Link>
                     </div>
+                    
                     <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                       <p>
                         or

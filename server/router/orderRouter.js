@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { auth, isAdmin } from '../middleware/authMiddleware';
+import { auth, isAdmin } from '../middleware/authMiddleware.js';
+import { getAllOrderDetails, getOrderDetails, orderStatusController } from '../controller/orderController.js';
 
 
 const router = Router();
@@ -7,7 +8,7 @@ const router = Router();
 
 router.get('/order-details', auth, getOrderDetails)
 router.get('/order-all-details', auth, isAdmin, getAllOrderDetails)
-router.put('/order-status',auth, isAdmin, orderStatusController)
+router.put('/order-status/:orderId',auth, isAdmin, orderStatusController)
 
 
 export default router;

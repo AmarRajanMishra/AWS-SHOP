@@ -1,7 +1,8 @@
 import Order from '../model/orderSchema.js'
 import braintree from 'braintree'
+import { config } from 'dotenv';
 
-
+config()
 // Payement Gateway Information
 
 var gateway = new braintree.BraintreeGateway({
