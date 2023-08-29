@@ -35,7 +35,7 @@ const userSchema = new Schema({
     },
     token : String
 
-})
+},{timestamps: true})
 
 export default model('User', userSchema);
 

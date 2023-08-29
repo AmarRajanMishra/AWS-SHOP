@@ -26,7 +26,7 @@ const productSchema = new Schema({
         type : String,
         default : 0
     }
-})
+},{timestamps: true})
 
 export default model('product', productSchema);
 
