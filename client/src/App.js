@@ -17,6 +17,7 @@ import AdminRoute from './components/Routes/AdminRoute';
 import PrivateRoute from './components/Routes/Private';
 import UserDashboard from './pages/user/UserDashboard';
 import Test from './components/Test';
+import UserOrders from './components/user/UserOrder';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
         </Route>
         <Route path='/dashboard' element={<PrivateRoute/>}>
           <Route path='user' element={<UserDashboard/>}/>
+          <Route path='user/orders' element={<UserOrders/>}/>
         </Route>
         <Route path='/product' element={<AllProducts/>} />
         <Route path='/cart' element={<CartPage/>} />
